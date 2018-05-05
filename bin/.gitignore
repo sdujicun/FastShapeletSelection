@@ -1,5 +1,4 @@
-/FSS_experiments/
-/PS_ACF_experiments/
+/weka/
 /applications/
 /bakeOffExperiments/
 /development/
@@ -9,4 +8,5 @@
 /representation/
 /tsc_algorithms/
 /utilities/
-/weka/
+/FSS_experiments/
+/PS_ACF_experiments/
