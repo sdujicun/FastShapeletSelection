@@ -4,11 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import tsc_algorithms.FastShapelets;
-import tsc_algorithms.FastShapeletsWithSFA;
 import tsc_algorithms.LearnShapelets;
-import utilities.ClassifierTools;
-import weka.classifiers.lazy.kNN;
-import weka.classifiers.trees.J48;
 import weka.core.Instances;
 import weka.core.shapelet.QualityMeasures;
 import weka.core.shapelet.Shapelet;
@@ -93,18 +89,17 @@ public class TrainningTimeTest {
 		Instances test, train;
 		test = utilities.ClassifierTools.loadData(filePath + "_TEST");
 		train = utilities.ClassifierTools.loadData(filePath + "_TRAIN");
-		ShapeletTransformWithSubclassSampleAndLFDP transform = new ShapeletTransformWithSubclassSampleAndLFDP();
-		transform.setRoundRobin(true);
-
-		transform.setClassValue(new BinarisedClassValue());
-		transform.setSubSeqDistance(new ImprovedOnlineSubSeqDistance());
-		transform.useCandidatePruning();
-		transform.setNumberOfShapelets(train.numInstances() / 2);
-		transform.setQualityMeasure(QualityMeasures.ShapeletQualityChoice.INFORMATION_GAIN);
-
+		FastShapelets fs = new FastShapelets();
 		long d1, d2;
 		d1 = System.nanoTime();
-		Instances tranTrain = transform.process(train);
+		try {
+			fs.buildClassifier(train);
+
+		} catch (Exception ex) {
+			System.out.println("Exception " + ex);
+		}
+
+		
 		
 		d2 = System.nanoTime();
 		System.out.print((d2 - d1) * 0.000000001 + "\t");
